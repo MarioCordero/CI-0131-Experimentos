@@ -60,3 +60,19 @@ leveneTest(weight_loss ~ program, data = weight)
 TukeyHSD(model, conf.level=.95)
 
 plot(TukeyHSD(model, conf.level=.95))
+
+library(ggplot2)
+library(multcomp)
+# Convertir TukeyHSD a data frame
+tukey_df <- as.data.frame(TukeyHSD(model, conf.level=.95)[[1]])
+tukey_df$comparison <- rownames(tukey_df)
+# Crear el plot con ggplot2
+ggplot(tukey_df, aes(x = comparison, y = diff)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = lwr, ymax = upr), width = 0.2) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+  coord_flip() +
+  labs(title = "Comparaciones múltiples de Tukey",
+       x = "Comparación",
+       y = "Diferencia") +
+  theme_minimal()
