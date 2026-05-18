@@ -76,3 +76,12 @@ ggplot(tukey_df, aes(x = comparison, y = diff)) +
        x = "Comparación",
        y = "Diferencia") +
   theme_minimal()
+
+#install.packages(lsr)
+library(lsr)
+etaSquared(model, anova=TRUE)
+
+power.anova.test(groups = 3, n = 30, between.var = 98.92, within.var = 139.56, sig.level = 0.05)
+
+power.anova.test(groups = 3, between.var = 98.92, within.var = 139.56, power = 0.8, sig.level =
+                   0.05)
